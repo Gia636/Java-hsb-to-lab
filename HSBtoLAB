@@ -1,10 +1,18 @@
 	public static float[] getHSBFromCPPN(Network n, int x, int y, int imageWidth, int imageHeight, double[] inputMultiples, double time) {
 
 		double[] input = get2DObjectCPPNInputs(x, y, imageWidth, imageHeight, time);
-    for(int i = 0; i < inputMultiples.length; i++) {
-            input[i] = input[i] * inputMultiples[i];
+    		for(int i = 0; i < inputMultiples.length; i++) {
+            		input[i] = input[i] * inputMultiples[i];
         }
         n.flush();
         double [] myColors = n.process(input);
+	
+	int RGB = img.getRGB(x, y);
+		Color c = new Color(RGB, true);
+		int r = c.getRed();
+		int g = c.getGreen();
+		int b = c.getBlue();
+		HSB = Color.RGBtoHSB(r, g, b, null);
+		float[] rangeRestrictHSB = Color.HSBtoLAB(h, s, b, null);
         
         return rangeRestrictHSB(myColors); }
