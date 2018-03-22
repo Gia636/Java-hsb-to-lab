@@ -1,0 +1,27 @@
+	public static BufferedImage imageFromCPPN(Network n, int imageWidth, int imageHeight, double[] inputMultiples, double time) {
+		BufferedImage image = new BufferedImage(imageWidth, imageHeight, BufferedImage.TYPE_INT_RGB);
+		for (int x = 0; x < imageWidth; x++) {// scans across whole image
+			for (int y = 0; y < imageHeight; y++) {
+				float[] hsb = getHSBFromCPPN(n, x, y, imageWidth, imageHeight, inputMultiples, time);
+				// network outputs computed on hsb, not rgb scale because
+				// creates better images
+				Color childColor = Color.getHSBColor(hsb[HUE_INDEX], hsb[SATURATION_INDEX], hsb[BRIGHTNESS_INDEX]);
+				// set back to RGB to draw picture to JFrame
+				image.setRGB(x, y, childColor.getRGB());
+			}
+		}
+		return image;
+		
+	}
+	public static BufferedImage LABimageFromCPPN(Network n, int imageWidth, int imageHeight, double[] inputMultiples, double time) {
+		BufferedImage image = new BufferedImage(imageWidth, imageHeight, BufferedImage.TYPE_INT_RGB);
+		for (int x = 0; x < imageWidth; x++) {// scans across whole image
+			for (int y = 0; y < imageHeight; y++) {
+				float[] lab = getLABFromCPPN(n, x, y, imageWidth, imageHeight, inputMultiples, time);
+				Color LABchildColor = Color.getLABColor();
+				image.setLAB(x, y, LABchildColor.getLAB());
+			}
+		}
+		return image;
+		
+	}
